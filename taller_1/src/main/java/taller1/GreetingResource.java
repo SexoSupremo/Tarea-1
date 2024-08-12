@@ -1,4 +1,4 @@
-package taller1.c1.2024;
+package taller1;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
