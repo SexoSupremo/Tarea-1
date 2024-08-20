@@ -30,6 +30,10 @@
     </dependencyManagement>
 
     <dependencies>
+    <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+       </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
@@ -56,6 +60,12 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+    
+      <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0.1</version>
+      </dependency>
     </dependencies>
 
     <build>

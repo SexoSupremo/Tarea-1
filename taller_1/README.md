@@ -1,6 +1,9 @@
 # Tareas
 [Tarea 1](tarea1.md)
 
+# Tareas
+[Tarea 2](tarea2.md)
+
 
 # taller_1
 
