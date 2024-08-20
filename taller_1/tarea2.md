@@ -154,8 +154,6 @@ Los códigos de estado HTTP se establecen explícitamente (por ejemplo, NOT_FOUN
 - Mejora la mantenibilidad del código.
 - Simplifica la documentación de la API.
 ## ¿Cómo manejarías diferentes tipos de respuestas (éxito, error, etc.) utilizando la clase ApiResponse?
-Manejo de diferentes tipos de respuestas:
-Se pueden crear métodos estáticos en ApiResponse para manejar casos comunes:
 
 public static <T> ApiResponse<T> success(T data) {
     return new ApiResponse<>(true, "Operación exitosa", data);
@@ -164,3 +162,91 @@ public static <T> ApiResponse<T> success(T data) {
 public static <T> ApiResponse<T> error(String message) {
     return new ApiResponse<>(false, message, null);
 }
+
+# Sección 3: Integración y Buenas Prácticas
+## ¿Qué consideraciones se deben tener al inyectar servicios en un recurso REST en Quarkus?
+Al inyectar servicios en un recurso REST en Quarkus, hay varias consideraciones importantes a tener en cuenta:
+
+Alcance (Scope) de los servicios:
+
+usar el alcance apropiado para tus servicios (por ejemplo, @ApplicationScoped, @RequestScoped).
+El alcance afecta el ciclo de vida y la concurrencia del servicio.
+
+
+Inyección de dependencias:
+
+Utilizar la anotación @Inject para inyectar servicios en tu recurso REST.
+Considerar usar constructor injection en lugar de field injection para mejorar la testabilidad.
+
+
+Transacciones:
+
+Si los servicios manejan transacciones, asegúrate de que estén correctamente configurados y gestionados.
+
+
+Manejo de excepciones:
+
+Implementar un manejo adecuado de excepciones tanto en el recurso como en los servicios inyectados.
+
+
+Configuración:
+
+Utilizar la inyección de configuración de Quarkus para inyectar valores de configuración en tus servicios.
+
+
+Lazy loading:
+
+Considerar usar @Lazy para servicios pesados que no siempre se necesitan.
+
+
+Interceptores:
+
+Puedes usar interceptores para agregar comportamiento transversal a tus servicios.
+
+
+Testing:
+
+Diseñar servicios y recursos de manera que sean fácilmente testeables, posiblemente usando interfaces para facilitar el mocking.
+## ¿Cómo se pueden manejar excepciones en un servicio REST utilizando ApiResponse?
+Primero, definiría mis propias excepciones personalizadas. Por ejemplo:
+public class RecursoNoEncontradoException extends RuntimeException {
+    public RecursoNoEncontradoException(String mensaje) {
+        super(mensaje);
+    }
+}
+Luego, crearía un ExceptionMapper para cada tipo de excepción:
+@Provider
+public class RecursoNoEncontradoExceptionMapper implements ExceptionMapper<RecursoNoEncontradoException> {
+    @Override
+    public Response toResponse(RecursoNoEncontradoException exception) {
+        return Response.status(Response.Status.NOT_FOUND)
+                .entity(new ApiResponse(false, exception.getMessage()))
+                .build();
+    }
+}
+Después, definiría una clase ApiResponse para estandarizar mis respuestas:
+    public class ApiResponse {
+    private boolean exito;
+    private String mensaje;
+
+    // Constructor, getters y setters
+}
+En mi recurso REST, usaría ApiResponse y lanzaría excepciones cuando fuera necesario:
+@Path("/usuarios")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class UsuarioResource {
+
+    @GET
+    @Path("/{id}")
+    public Response obtenerUsuario(@PathParam("id") Long id) {
+        Usuario usuario = servicioUsuario.buscarPorId(id);
+        if (usuario == null) {
+            throw new RecursoNoEncontradoException("Usuario no encontrado con id: " + id);
+        }
+        return Response.ok(new ApiResponse(true, "Usuario encontrado")).entity(usuario).build();
+    }
+
+    // Etc..
+}
+Este enfoque me permitiría manejar las excepciones de forma centralizada, proporcionar respuestas consistentes y separar la lógica de manejo de errores del código principal.
