@@ -40,7 +40,7 @@ public class PresupuestoRepository {
         }
     }
 
-    private void guardarDatos() {
+    public void guardarDatos() {
         try {
             objectMapper.writeValue(new File(FILE_PATH), presupuestosList);
         } catch (IOException e) {
