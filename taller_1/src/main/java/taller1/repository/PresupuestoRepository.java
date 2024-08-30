@@ -28,10 +28,12 @@ public class PresupuestoRepository {
 
     private List<Presupuesto> cargarDatos() {
         try {
+            System.out.println("CARGA DE DATOS: " + FILE_PATH);
             File file = new File(FILE_PATH);
             if (file.exists()) {
                 return objectMapper.readValue(file, new TypeReference<List<Presupuesto>>() {});
             } else {
+                System.out.println("No hay datos en el archivo.");
                 return new ArrayList<>();
             }
         } catch (IOException e) {
