@@ -1,10 +1,14 @@
 package taller1.controllers;
 
+import java.util.HashMap;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import taller1.entities.HolaMundo;
 
 @Path("/math")
 public class MathResource {
@@ -38,5 +42,22 @@ public class MathResource {
             throw new IllegalArgumentException("el cero no existe");
         }
         return a / b;
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public HashMap<String, Object> respuestaPost(HashMap<String, Object> param) {
+        System.out.println(param.get("Supremo"));
+        return param;
+    }
+    
+    @POST
+    @Path("hola")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public HolaMundo holaMundo(HolaMundo param) {
+        System.out.println(param);
+        return param;
     }
 }
