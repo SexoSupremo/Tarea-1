@@ -22,7 +22,7 @@ public class PresupuestoResource {
     @POST
     public Response crearPresupuesto(Presupuesto presupuesto) {
         try {
-            // Puedes implementar lógica adicional aquí, como la validación.
+            
             List<Presupuesto> lista = presupuestoRepository.listar();
             if (lista.stream().anyMatch(p -> p.getId().equals(presupuesto.getId()))) {
                 return Response.status(Response.Status.CONFLICT)
