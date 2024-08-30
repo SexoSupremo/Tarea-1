@@ -1,48 +1,26 @@
-[
-    {
-      "id": 1,
-      "fechaInicio": "2024-06-01",
-      "fechaFin": "2024-06-30",
-      "montoPresupuestado": 100000.00,
-      "gastos": [
-        {
-          "id": 1,
-          "fecha": "2024-06-06",
-          "monto": 10000.00,
-          "descripcion": "Gasto xyz"
-        },
-        {
-          "id": 2,
-          "fecha": "2024-06-07",
-          "monto": 1000.00,
-          "descripcion": "Impresiones"
-        },
-        {
-          "id": 3,
-          "fecha": "2024-06-07",
-          "monto": 10000.00,
-          "descripcion": "Entrega para terreno"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "fechaInicio": "2024-07-01",
-      "fechaFin": "2024-07-31",
-      "montoPresupuestado": 150000.00,
-      "gastos": [
-        {
-          "id": 4,
-          "fecha": "2024-07-10",
-          "monto": 5000.00,
-          "descripcion": "Materiales de oficina"
-        },
-        {
-          "id": 5,
-          "fecha": "2024-07-15",
-          "monto": 20000.00,
-          "descripcion": "Pago de servicios"
-        }
-      ]
-    }
+{
+  "id":1,
+  "fechaInicio":"2024-06-06",
+  "fechaFin":"2024-06-06",
+  "montoPresupuestado":100000,
+  "gastos":[
+     {
+        "id":1,
+        "fecha":1724198400000,
+        "monto":10000,
+        "descripcion":"Gasto xyz"
+     },
+     {
+        "id":2,
+        "fecha":1724284800000,
+        "monto":1000000,
+        "descripcion":"impresiones"
+     },
+     {
+        "id":3,
+        "fecha":1724284800000,
+        "monto":10000000,
+        "descripcion":"entrega para terreno"
+     }
   ]
+}

@@ -34,6 +34,11 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy</artifactId>
        </dependency>
+       <dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-resteasy-jackson</artifactId>
+</dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
@@ -52,6 +57,7 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+        
     
       <dependency>
         <groupId>javax</groupId>
