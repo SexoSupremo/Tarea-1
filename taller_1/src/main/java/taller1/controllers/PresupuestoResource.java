@@ -45,29 +45,44 @@ public class PresupuestoResource {
     @POST
     @Path("/agregar-gasto/{presupuestoId}")
     public Response agregarGasto(@PathParam("presupuestoId") Integer presupuestoId, Gastos nuevoGasto) {
+        // Validar que el gasto no sea nulo y tenga valores válidos
+        if (nuevoGasto == null || nuevoGasto.getMonto() == null || nuevoGasto.getMonto() <= 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                           .entity(new ApiResponse<>("Gasto inválido", Response.Status.BAD_REQUEST.getStatusCode(), null))
+                           .build();
+        }
+
         try {
+            // Obtener el presupuesto por ID
             Presupuesto presupuesto = presupuestoRepository.obtenerById(presupuestoId);
-            if (presupuesto != null) {
-                double totalGastos = presupuesto.getGastos().stream()
-                                                .mapToDouble(Gastos::getMonto)
-                                                .sum();
-                double montoPresupuestado = presupuesto.getMontoPresupuestado();
-                if (totalGastos + nuevoGasto.getMonto() <= montoPresupuestado) {
-                    presupuesto.getGastos().add(nuevoGasto);
-                    presupuestoRepository.guardarDatos();
-                    return Response.status(Response.Status.CREATED)
-                                   .entity(new ApiResponse<>("Gasto agregado con éxito", Response.Status.CREATED.getStatusCode(), nuevoGasto))
-                                   .build();
-                } else {
-                    return Response.status(Response.Status.BAD_REQUEST)
-                                   .entity(new ApiResponse<>("El gasto supera el monto presupuestado", Response.Status.BAD_REQUEST.getStatusCode(), null))
-                                   .build();
-                }
-            } else {
+
+            // Verificar si el presupuesto existe
+            if (presupuesto == null) {
                 return Response.status(Response.Status.NOT_FOUND)
                                .entity(new ApiResponse<>("Presupuesto no encontrado", Response.Status.NOT_FOUND.getStatusCode(), null))
                                .build();
             }
+
+            // Calcular el total de los gastos existentes
+            double totalGastos = presupuesto.getGastos().stream()
+                                            .mapToDouble(Gastos::getMonto)
+                                            .sum();
+            
+            // Verificar si el nuevo gasto supera el monto presupuestado
+            double montoPresupuestado = presupuesto.getMontoPresupuestado();
+            if (totalGastos + nuevoGasto.getMonto() > montoPresupuestado) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                               .entity(new ApiResponse<>("El gasto supera el monto presupuestado", Response.Status.BAD_REQUEST.getStatusCode(), null))
+                               .build();
+            }
+
+            // Agregar el nuevo gasto al presupuesto
+            presupuesto.getGastos().add(nuevoGasto);
+            presupuestoRepository.guardarDatos();
+
+            return Response.status(Response.Status.CREATED)
+                           .entity(new ApiResponse<>("Gasto agregado con éxito", Response.Status.CREATED.getStatusCode(), nuevoGasto))
+                           .build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
