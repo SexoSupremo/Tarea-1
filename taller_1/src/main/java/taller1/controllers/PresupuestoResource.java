@@ -54,16 +54,18 @@ public Response agregarGasto(@PathParam("presupuestoId") Integer presupuestoId, 
         }
 
         try {
-            // Obtener el presupuesto por ID
+            System.out.println("Buscando presupuesto con ID: " + presupuestoId);
             Presupuesto presupuesto = presupuestoRepository.obtenerById(presupuestoId);
-
-            // Verificar si el presupuesto existe
+            
             if (presupuesto == null) {
+                System.out.println("Presupuesto no encontrado para ID: " + presupuestoId);
                 return Response.status(Response.Status.NOT_FOUND)
                                .entity(new ApiResponse<>("Presupuesto no encontrado", Response.Status.NOT_FOUND.getStatusCode(), null))
                                .build();
             }
-
+            
+            System.out.println("Presupuesto encontrado: " + presupuesto);
+            
             // Calcular el total de los gastos existentes
             double totalGastos = presupuesto.getGastos().stream()
                                             .mapToDouble(Gastos::getMonto)
