@@ -34,6 +34,7 @@ public class PresupuestoResource {
          if (presupuesto.getGastos() == null) {
             presupuesto.setGastos(new ArrayList<>());
         }
+        presupuestoRepository.agregar(presupuesto);
 
             if (lista.stream().anyMatch(p -> p.getId().equals(presupuesto.getId()))) {
                 return Response.status(Response.Status.CONFLICT)

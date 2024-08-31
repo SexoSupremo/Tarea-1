@@ -69,6 +69,11 @@ public void guardarDatos() {
     }
 }
 
+public Presupuesto agregar(Presupuesto presupuesto) {
+    presupuestosList.add(presupuesto);
+    guardarDatos();
+    return presupuesto;
+}
     public Presupuesto obtenerById(Integer id) {
         return presupuestosList.stream()
                 .filter(presupuesto -> presupuesto.getId().equals(id))
