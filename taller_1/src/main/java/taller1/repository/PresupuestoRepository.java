@@ -59,13 +59,15 @@ private List<Presupuesto> cargarDatos() {
     }
 }
 
-    public void guardarDatos() {
-        try {
-            objectMapper.writeValue(new File(FILE_PATH), presupuestosList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+public void guardarDatos() {
+    try {
+        objectMapper.writeValue(new File(FILE_PATH), presupuestosList);
+        System.out.println("Datos guardados exitosamente en " + FILE_PATH);
+    } catch (IOException e) {
+        System.err.println("Error al guardar los datos: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
     public Presupuesto obtenerById(Integer id) {
         return presupuestosList.stream()
