@@ -66,6 +66,7 @@ public class PresupuestoRepository {
     }
 
     public List<Presupuesto> listar() {
+        System.out.println("Listando presupuestos. Número de presupuestos: " + presupuestosList.size());
         return new ArrayList<>(presupuestosList);
     }
 
