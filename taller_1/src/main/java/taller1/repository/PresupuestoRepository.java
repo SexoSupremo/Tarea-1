@@ -8,6 +8,7 @@ import java.util.Optional;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -31,24 +32,32 @@ public class PresupuestoRepository {
         }
     }
 
-    private List<Presupuesto> cargarDatos() {
-        try {
-            System.out.println("Intentando cargar datos desde: " + FILE_PATH);
-            File file = new File(FILE_PATH);
-            if (file.exists()) {
-                List<Presupuesto> presupuestos = objectMapper.readValue(file, new TypeReference<List<Presupuesto>>() {});
-                System.out.println("Datos cargados exitosamente. Número de presupuestos: " + presupuestos.size());
-                return presupuestos;
+private List<Presupuesto> cargarDatos() {
+    try {
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            JsonNode rootNode = objectMapper.readTree(file);
+            if (rootNode.isArray()) {
+                return objectMapper.readValue(file, new TypeReference<List<Presupuesto>>() {});
+            } else if (rootNode.isObject()) {
+                Presupuesto presupuesto = objectMapper.readValue(file, Presupuesto.class);
+                List<Presupuesto> lista = new ArrayList<>();
+                lista.add(presupuesto);
+                return lista;
             } else {
-                System.out.println("El archivo de datos no existe: " + FILE_PATH);
+                System.out.println("El archivo JSON no contiene ni un objeto ni un array.");
                 return new ArrayList<>();
             }
-        } catch (IOException e) {
-            System.err.println("Error al cargar los datos: " + e.getMessage());
-            e.printStackTrace();
+        } else {
+            System.out.println("El archivo " + FILE_PATH + " no existe.");
             return new ArrayList<>();
         }
+    } catch (IOException e) {
+        System.err.println("Error al cargar presupuestos: " + e.getMessage());
+        e.printStackTrace();
+        return new ArrayList<>();
     }
+}
 
     public void guardarDatos() {
         try {
