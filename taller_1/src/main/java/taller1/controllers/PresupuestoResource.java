@@ -9,6 +9,7 @@ import taller1.entities.apiresponse.Presupuesto;
 import taller1.model.response.ApiResponse;
 import taller1.repository.PresupuestoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/presupuestos")
@@ -24,21 +25,31 @@ public class PresupuestoResource {
         try {
             
             List<Presupuesto> lista = presupuestoRepository.listar();
+
+            int nuevoId = lista.stream()
+                           .mapToInt(Presupuesto::getId)
+                           .max()
+                           .orElse(0) + 1;
+        presupuesto.setId(nuevoId);
+         if (presupuesto.getGastos() == null) {
+            presupuesto.setGastos(new ArrayList<>());
+        }
+
             if (lista.stream().anyMatch(p -> p.getId().equals(presupuesto.getId()))) {
                 return Response.status(Response.Status.CONFLICT)
                                .entity(new ApiResponse<>("Presupuesto ya existe", Response.Status.CONFLICT.getStatusCode(), null))
                                .build();
             }
-            lista.add(presupuesto);
-            presupuestoRepository.guardarDatos();
-            return Response.status(Response.Status.CREATED)
-                           .entity(new ApiResponse<>("Presupuesto creado con éxito", Response.Status.CREATED.getStatusCode(), presupuesto))
-                           .build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                           .entity(new ApiResponse<>("Error al crear el presupuesto", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), null))
-                           .build();
+               lista.add(presupuesto);
+        presupuestoRepository.guardarDatos();
+        return Response.status(Response.Status.CREATED)
+                       .entity(new ApiResponse<>("Presupuesto creado con éxito", Response.Status.CREATED.getStatusCode(), presupuesto))
+                       .build();
+    } catch (Exception e) {
+        e.printStackTrace();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity(new ApiResponse<>("Error al crear el presupuesto", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), null))
+                       .build();
         }
     }
 
