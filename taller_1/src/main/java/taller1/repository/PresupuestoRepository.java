@@ -33,15 +33,18 @@ public class PresupuestoRepository {
 
     private List<Presupuesto> cargarDatos() {
         try {
-            System.out.println("CARGA DE DATOS: " + FILE_PATH);
+            System.out.println("Intentando cargar datos desde: " + FILE_PATH);
             File file = new File(FILE_PATH);
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<List<Presupuesto>>() {});
+                List<Presupuesto> presupuestos = objectMapper.readValue(file, new TypeReference<List<Presupuesto>>() {});
+                System.out.println("Datos cargados exitosamente. Número de presupuestos: " + presupuestos.size());
+                return presupuestos;
             } else {
-                System.out.println("No hay datos en el archivo.");
+                System.out.println("El archivo de datos no existe: " + FILE_PATH);
                 return new ArrayList<>();
             }
         } catch (IOException e) {
+            System.err.println("Error al cargar los datos: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         }
