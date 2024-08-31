@@ -24,6 +24,11 @@ public class PresupuestoRepository {
     public PresupuestoRepository() {
         objectMapper = new ObjectMapper();
         presupuestosList = cargarDatos();
+        if (presupuestosList.isEmpty()) {
+            System.out.println("No se cargaron datos de presupuestos.");
+        } else {
+            System.out.println("Se cargaron " + presupuestosList.size() + " presupuestos.");
+        }
     }
 
     private List<Presupuesto> cargarDatos() {
