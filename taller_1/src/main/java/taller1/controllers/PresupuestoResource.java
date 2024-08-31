@@ -43,8 +43,9 @@ public class PresupuestoResource {
     }
 
     @POST
-    @Path("/agregar-gasto/{presupuestoId}")
-    public Response agregarGasto(@PathParam("presupuestoId") Integer presupuestoId, Gastos nuevoGasto) {
+@Path("/agregar-gasto/{presupuestoId}")
+public Response agregarGasto(@PathParam("presupuestoId") Integer presupuestoId, Gastos nuevoGasto) {
+    System.out.println("Intentando agregar gasto al presupuesto con ID: " + presupuestoId);
         // Validar que el gasto no sea nulo y tenga valores válidos
         if (nuevoGasto == null || nuevoGasto.getMonto() == null || nuevoGasto.getMonto() <= 0) {
             return Response.status(Response.Status.BAD_REQUEST)
