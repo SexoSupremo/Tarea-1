@@ -42,7 +42,7 @@ public class PresupuestoResource {
         }
     }
 
-    @POST
+@POST
 @Path("/agregar-gasto/{presupuestoId}")
 public Response agregarGasto(@PathParam("presupuestoId") Integer presupuestoId, Gastos nuevoGasto) {
     System.out.println("Intentando agregar gasto al presupuesto con ID: " + presupuestoId);
@@ -65,7 +65,7 @@ public Response agregarGasto(@PathParam("presupuestoId") Integer presupuestoId, 
             }
             
             System.out.println("Presupuesto encontrado: " + presupuesto);
-            
+
             // Calcular el total de los gastos existentes
             double totalGastos = presupuesto.getGastos().stream()
                                             .mapToDouble(Gastos::getMonto)
