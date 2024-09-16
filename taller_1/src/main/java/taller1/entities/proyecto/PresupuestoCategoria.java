@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package taller1.entities.proyecto;
+package com.mycompany.yu38.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -138,7 +138,7 @@ public class PresupuestoCategoria implements Serializable {
 
     @Override
     public String toString() {
-        return "taller1.entities.proyecto.PresupuestoCategoria[ presupuestoCategoriaPK=" + presupuestoCategoriaPK + " ]";
+        return "com.mycompany.yu38.entities.PresupuestoCategoria[ presupuestoCategoriaPK=" + presupuestoCategoriaPK + " ]";
     }
     
 }

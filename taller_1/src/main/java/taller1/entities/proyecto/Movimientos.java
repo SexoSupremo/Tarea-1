@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package taller1.entities.proyecto;
+package com.mycompany.yu38.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -126,7 +126,7 @@ public class Movimientos implements Serializable {
 
     @Override
     public String toString() {
-        return "taller1.entities.proyecto.Movimientos[ idMov=" + idMov + " ]";
+        return "com.mycompany.yu38.entities.Movimientos[ idMov=" + idMov + " ]";
     }
     
 }
