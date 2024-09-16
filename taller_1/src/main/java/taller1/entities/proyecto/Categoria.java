@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.yu38.entities;
+package taller1.entities.proyecto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -134,7 +134,7 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.yu38.entities.Categoria[ id=" + id + " ]";
+        return "taller1.entities.proyecto.Categoria[ id=" + id + " ]";
     }
     
 }
