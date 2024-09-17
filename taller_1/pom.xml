@@ -43,6 +43,7 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
@@ -64,6 +65,10 @@
         <artifactId>javaee-api</artifactId>
         <version>8.0.1</version>
       </dependency>
+      <dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-hibernate-orm</artifactId>
+    </dependency>
     </dependencies>
 
     <build>
