@@ -9,7 +9,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,8 +24,8 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "PresupuestoCategoria.findAll", query = "SELECT p FROM PresupuestoCategoria p"),
     @NamedQuery(name = "PresupuestoCategoria.findByIdPresupuesto", query = "SELECT p FROM PresupuestoCategoria p WHERE p.presupuestoCategoriaPK.idPresupuesto = :idPresupuesto"),
-    @NamedQuery(name = "PresupuestoCategoria.findById", query = "SELECT p FROM PresupuestoCategoria p WHERE p.presupuestoCategoriaPK.id = :id"),
-    @NamedQuery(name = "PresupuestoCategoria.findByPrevisto", query = "SELECT p FROM PresupuestoCategoria p WHERE p.previsto = :previsto"),
+    @NamedQuery(name = "PresupuestoCategoria.findByIdCategoria", query = "SELECT p FROM PresupuestoCategoria p WHERE p.presupuestoCategoriaPK.idCategoria = :idCategoria"),
+    @NamedQuery(name = "PresupuestoCategoria.findByPrevio", query = "SELECT p FROM PresupuestoCategoria p WHERE p.previo = :previo"),
     @NamedQuery(name = "PresupuestoCategoria.findByReal", query = "SELECT p FROM PresupuestoCategoria p WHERE p.real = :real"),
     @NamedQuery(name = "PresupuestoCategoria.findByDiferencia", query = "SELECT p FROM PresupuestoCategoria p WHERE p.diferencia = :diferencia")})
 public class PresupuestoCategoria implements Serializable {
@@ -35,19 +34,19 @@ public class PresupuestoCategoria implements Serializable {
     @EmbeddedId
     protected PresupuestoCategoriaPK presupuestoCategoriaPK;
     @Basic(optional = false)
-    @Column(name = "previsto")
-    private int previsto;
+    @Column(name = "previo")
+    private int previo;
     @Basic(optional = false)
     @Column(name = "real")
     private int real;
     @Basic(optional = false)
     @Column(name = "diferencia")
     private int diferencia;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
     private Categoria categoria;
     @JoinColumn(name = "id_presupuesto", referencedColumnName = "id_presupuesto", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private PresupuestoMensual presupuestoMensual;
 
     public PresupuestoCategoria() {
@@ -57,15 +56,15 @@ public class PresupuestoCategoria implements Serializable {
         this.presupuestoCategoriaPK = presupuestoCategoriaPK;
     }
 
-    public PresupuestoCategoria(PresupuestoCategoriaPK presupuestoCategoriaPK, int previsto, int real, int diferencia) {
+    public PresupuestoCategoria(PresupuestoCategoriaPK presupuestoCategoriaPK, int previo, int real, int diferencia) {
         this.presupuestoCategoriaPK = presupuestoCategoriaPK;
-        this.previsto = previsto;
+        this.previo = previo;
         this.real = real;
         this.diferencia = diferencia;
     }
 
-    public PresupuestoCategoria(int idPresupuesto, String id) {
-        this.presupuestoCategoriaPK = new PresupuestoCategoriaPK(idPresupuesto, id);
+    public PresupuestoCategoria(int idPresupuesto, int idCategoria) {
+        this.presupuestoCategoriaPK = new PresupuestoCategoriaPK(idPresupuesto, idCategoria);
     }
 
     public PresupuestoCategoriaPK getPresupuestoCategoriaPK() {
@@ -76,12 +75,12 @@ public class PresupuestoCategoria implements Serializable {
         this.presupuestoCategoriaPK = presupuestoCategoriaPK;
     }
 
-    public int getPrevisto() {
-        return previsto;
+    public int getPrevio() {
+        return previo;
     }
 
-    public void setPrevisto(int previsto) {
-        this.previsto = previsto;
+    public void setPrevio(int previo) {
+        this.previo = previo;
     }
 
     public int getReal() {

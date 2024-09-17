@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +32,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "PresupuestoMensual.findAll", query = "SELECT p FROM PresupuestoMensual p"),
     @NamedQuery(name = "PresupuestoMensual.findByIdPresupuesto", query = "SELECT p FROM PresupuestoMensual p WHERE p.idPresupuesto = :idPresupuesto"),
-    @NamedQuery(name = "PresupuestoMensual.findByFechaInicio", query = "SELECT p FROM PresupuestoMensual p WHERE p.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "PresupuestoMensual.findByFechaIncio", query = "SELECT p FROM PresupuestoMensual p WHERE p.fechaIncio = :fechaIncio"),
     @NamedQuery(name = "PresupuestoMensual.findByFechaFin", query = "SELECT p FROM PresupuestoMensual p WHERE p.fechaFin = :fechaFin"),
     @NamedQuery(name = "PresupuestoMensual.findBySaldoInicial", query = "SELECT p FROM PresupuestoMensual p WHERE p.saldoInicial = :saldoInicial"),
     @NamedQuery(name = "PresupuestoMensual.findBySaldoFinal", query = "SELECT p FROM PresupuestoMensual p WHERE p.saldoFinal = :saldoFinal"),
@@ -47,9 +46,9 @@ public class PresupuestoMensual implements Serializable {
     @Column(name = "id_presupuesto")
     private Integer idPresupuesto;
     @Basic(optional = false)
-    @Column(name = "fecha_inicio")
+    @Column(name = "fecha_incio")
     @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
+    private Date fechaIncio;
     @Basic(optional = false)
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
@@ -63,12 +62,12 @@ public class PresupuestoMensual implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "presupuestoMensual", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "presupuestoMensual")
     private List<PresupuestoCategoria> presupuestoCategoriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresupuesto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresupuesto")
     private List<Movimientos> movimientosList;
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Cliente idCliente;
 
     public PresupuestoMensual() {
@@ -78,9 +77,9 @@ public class PresupuestoMensual implements Serializable {
         this.idPresupuesto = idPresupuesto;
     }
 
-    public PresupuestoMensual(Integer idPresupuesto, Date fechaInicio, Date fechaFin, int saldoInicial, int saldoFinal, String estado) {
+    public PresupuestoMensual(Integer idPresupuesto, Date fechaIncio, Date fechaFin, int saldoInicial, int saldoFinal, String estado) {
         this.idPresupuesto = idPresupuesto;
-        this.fechaInicio = fechaInicio;
+        this.fechaIncio = fechaIncio;
         this.fechaFin = fechaFin;
         this.saldoInicial = saldoInicial;
         this.saldoFinal = saldoFinal;
@@ -95,12 +94,12 @@ public class PresupuestoMensual implements Serializable {
         this.idPresupuesto = idPresupuesto;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public Date getFechaIncio() {
+        return fechaIncio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechaIncio(Date fechaIncio) {
+        this.fechaIncio = fechaIncio;
     }
 
     public Date getFechaFin() {

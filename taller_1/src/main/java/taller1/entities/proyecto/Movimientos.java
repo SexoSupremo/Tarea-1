@@ -9,7 +9,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,16 +28,17 @@ import javax.persistence.TemporalType;
 @Table(name = "movimientos")
 @NamedQueries({
     @NamedQuery(name = "Movimientos.findAll", query = "SELECT m FROM Movimientos m"),
-    @NamedQuery(name = "Movimientos.findByIdMov", query = "SELECT m FROM Movimientos m WHERE m.idMov = :idMov"),
+    @NamedQuery(name = "Movimientos.findByIdMovimiento", query = "SELECT m FROM Movimientos m WHERE m.idMovimiento = :idMovimiento"),
     @NamedQuery(name = "Movimientos.findByFecha", query = "SELECT m FROM Movimientos m WHERE m.fecha = :fecha"),
     @NamedQuery(name = "Movimientos.findByMonto", query = "SELECT m FROM Movimientos m WHERE m.monto = :monto")})
 public class Movimientos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_mov")
-    private String idMov;
+    @Column(name = "id_movimiento")
+    private Integer idMovimiento;
     @Basic(optional = false)
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
@@ -44,32 +46,32 @@ public class Movimientos implements Serializable {
     @Basic(optional = false)
     @Column(name = "monto")
     private int monto;
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Categoria id;
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    @ManyToOne(optional = false)
+    private Categoria idCategoria;
     @JoinColumn(name = "id_presupuesto", referencedColumnName = "id_presupuesto")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private PresupuestoMensual idPresupuesto;
 
     public Movimientos() {
     }
 
-    public Movimientos(String idMov) {
-        this.idMov = idMov;
+    public Movimientos(Integer idMovimiento) {
+        this.idMovimiento = idMovimiento;
     }
 
-    public Movimientos(String idMov, Date fecha, int monto) {
-        this.idMov = idMov;
+    public Movimientos(Integer idMovimiento, Date fecha, int monto) {
+        this.idMovimiento = idMovimiento;
         this.fecha = fecha;
         this.monto = monto;
     }
 
-    public String getIdMov() {
-        return idMov;
+    public Integer getIdMovimiento() {
+        return idMovimiento;
     }
 
-    public void setIdMov(String idMov) {
-        this.idMov = idMov;
+    public void setIdMovimiento(Integer idMovimiento) {
+        this.idMovimiento = idMovimiento;
     }
 
     public Date getFecha() {
@@ -88,12 +90,12 @@ public class Movimientos implements Serializable {
         this.monto = monto;
     }
 
-    public Categoria getId() {
-        return id;
+    public Categoria getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setId(Categoria id) {
-        this.id = id;
+    public void setIdCategoria(Categoria idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public PresupuestoMensual getIdPresupuesto() {
@@ -107,7 +109,7 @@ public class Movimientos implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idMov != null ? idMov.hashCode() : 0);
+        hash += (idMovimiento != null ? idMovimiento.hashCode() : 0);
         return hash;
     }
 
@@ -118,7 +120,7 @@ public class Movimientos implements Serializable {
             return false;
         }
         Movimientos other = (Movimientos) object;
-        if ((this.idMov == null && other.idMov != null) || (this.idMov != null && !this.idMov.equals(other.idMov))) {
+        if ((this.idMovimiento == null && other.idMovimiento != null) || (this.idMovimiento != null && !this.idMovimiento.equals(other.idMovimiento))) {
             return false;
         }
         return true;
@@ -126,7 +128,7 @@ public class Movimientos implements Serializable {
 
     @Override
     public String toString() {
-        return "taller1.entities.proyecto.Movimientos[ idMov=" + idMov + " ]";
+        return "taller1.entities.proyecto.Movimientos[ idMovimiento=" + idMovimiento + " ]";
     }
     
 }

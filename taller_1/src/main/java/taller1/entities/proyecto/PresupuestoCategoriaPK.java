@@ -20,15 +20,15 @@ public class PresupuestoCategoriaPK implements Serializable {
     @Column(name = "id_presupuesto")
     private int idPresupuesto;
     @Basic(optional = false)
-    @Column(name = "id")
-    private String id;
+    @Column(name = "id_categoria")
+    private int idCategoria;
 
     public PresupuestoCategoriaPK() {
     }
 
-    public PresupuestoCategoriaPK(int idPresupuesto, String id) {
+    public PresupuestoCategoriaPK(int idPresupuesto, int idCategoria) {
         this.idPresupuesto = idPresupuesto;
-        this.id = id;
+        this.idCategoria = idCategoria;
     }
 
     public int getIdPresupuesto() {
@@ -39,19 +39,19 @@ public class PresupuestoCategoriaPK implements Serializable {
         this.idPresupuesto = idPresupuesto;
     }
 
-    public String getId() {
-        return id;
+    public int getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) idPresupuesto;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (int) idCategoria;
         return hash;
     }
 
@@ -65,7 +65,7 @@ public class PresupuestoCategoriaPK implements Serializable {
         if (this.idPresupuesto != other.idPresupuesto) {
             return false;
         }
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (this.idCategoria != other.idCategoria) {
             return false;
         }
         return true;
@@ -73,7 +73,7 @@ public class PresupuestoCategoriaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "taller1.entities.proyecto.PresupuestoCategoriaPK[ idPresupuesto=" + idPresupuesto + ", id=" + id + " ]";
+        return "taller1.entities.proyecto.PresupuestoCategoriaPK[ idPresupuesto=" + idPresupuesto + ", idCategoria=" + idCategoria + " ]";
     }
     
 }
