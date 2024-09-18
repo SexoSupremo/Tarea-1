@@ -24,7 +24,7 @@ Diferencia entre @ApplicationScoped, @RequestScoped, y @Singleton:
 - Definir los métodos del servicio dentro de la clase.
 
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class SaludoService {
@@ -99,10 +99,10 @@ Se incluye un constructor que inicializa todos los campos.
 Se proporcionan getters y setters para cada campo, permitiendo acceso y modificación.
 
 ## ¿Cómo se modifica un recurso REST en Quarkus para que utilice un ApiResponse genérico?
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/productos")
 @Produces(MediaType.APPLICATION_JSON)
