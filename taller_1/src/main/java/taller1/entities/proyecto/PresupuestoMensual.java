@@ -36,7 +36,8 @@ import jakarta.persistence.TemporalType;
     @NamedQuery(name = "PresupuestoMensual.findByFechaFin", query = "SELECT p FROM PresupuestoMensual p WHERE p.fechaFin = :fechaFin"),
     @NamedQuery(name = "PresupuestoMensual.findBySaldoInicial", query = "SELECT p FROM PresupuestoMensual p WHERE p.saldoInicial = :saldoInicial"),
     @NamedQuery(name = "PresupuestoMensual.findBySaldoFinal", query = "SELECT p FROM PresupuestoMensual p WHERE p.saldoFinal = :saldoFinal"),
-    @NamedQuery(name = "PresupuestoMensual.findByEstado", query = "SELECT p FROM PresupuestoMensual p WHERE p.estado = :estado")})
+    @NamedQuery(name = "PresupuestoMensual.findByEstado", query = "SELECT p FROM PresupuestoMensual p WHERE p.estado = :estado"),
+    @NamedQuery(name = "PresupuestoMensual.findByMontoPresupuestado", query = "SELECT p FROM PresupuestoMensual p WHERE p.montoPresupuestado = :montoPresupuestado")})
 public class PresupuestoMensual implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +63,9 @@ public class PresupuestoMensual implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
+    @Basic(optional = false)
+    @Column(name = "monto_presupuestado")
+    private double montoPresupuestado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "presupuestoMensual")
     private List<PresupuestoCategoria> presupuestoCategoriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPresupuesto")
@@ -77,13 +81,14 @@ public class PresupuestoMensual implements Serializable {
         this.idPresupuesto = idPresupuesto;
     }
 
-    public PresupuestoMensual(Integer idPresupuesto, Date fechaIncio, Date fechaFin, int saldoInicial, int saldoFinal, String estado) {
+    public PresupuestoMensual(Integer idPresupuesto, Date fechaIncio, Date fechaFin, int saldoInicial, int saldoFinal, String estado, double montoPresupuestado) {
         this.idPresupuesto = idPresupuesto;
         this.fechaIncio = fechaIncio;
         this.fechaFin = fechaFin;
         this.saldoInicial = saldoInicial;
         this.saldoFinal = saldoFinal;
         this.estado = estado;
+        this.montoPresupuestado = montoPresupuestado;
     }
 
     public Integer getIdPresupuesto() {
@@ -132,6 +137,14 @@ public class PresupuestoMensual implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public double getMontoPresupuestado() {
+        return montoPresupuestado;
+    }
+
+    public void setMontoPresupuestado(double montoPresupuestado) {
+        this.montoPresupuestado = montoPresupuestado;
     }
 
     public List<PresupuestoCategoria> getPresupuestoCategoriaList() {
