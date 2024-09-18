@@ -27,9 +27,9 @@ import jakarta.persistence.TemporalType;
  *
  * @author ehequ
  */
-@Entity
-@Table(name = "presupuesto_mensual")
-@NamedQueries({
+@Entity // Indica que esta clase es una entidad JPA
+@Table(name = "presupuesto_mensual") // Especifica el nombre de la tabla en la base de dato
+@NamedQueries({ // Define consultas predefinidas para esta entidad
     @NamedQuery(name = "PresupuestoMensual.findAll", query = "SELECT p FROM PresupuestoMensual p"),
     @NamedQuery(name = "PresupuestoMensual.findByIdPresupuesto", query = "SELECT p FROM PresupuestoMensual p WHERE p.idPresupuesto = :idPresupuesto"),
     @NamedQuery(name = "PresupuestoMensual.findByFechaIncio", query = "SELECT p FROM PresupuestoMensual p WHERE p.fechaIncio = :fechaIncio"),
