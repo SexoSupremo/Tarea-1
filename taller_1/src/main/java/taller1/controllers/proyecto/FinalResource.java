@@ -1,6 +1,5 @@
 package taller1.controllers.proyecto;
 
-
 import taller1.entities.proyecto.PresupuestoMensual;
 import taller1.entities.proyecto.Cliente;
 import jakarta.inject.Inject;
@@ -32,7 +31,7 @@ public class FinalResource {
             @PathParam("rangoFinal") double rangoFinal) {
         try {
             List<PresupuestoMensual> presupuestos = em.createQuery(
-                "SELECT pm FROM PresupuestoMensual pm WHERE pm.montoPresupuestado BETWEEN :rangoInicial AND :rangoFinal", 
+                "SELECT pm FROM PresupuestoMensual pm WHERE pm.saldoInicial BETWEEN :rangoInicial AND :rangoFinal", 
                 PresupuestoMensual.class)
                 .setParameter("rangoInicial", rangoInicial)
                 .setParameter("rangoFinal", rangoFinal)
@@ -57,19 +56,19 @@ public class FinalResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerPresupuestoMasAlto() {
         try {
-            Double maxMonto = em.createQuery("SELECT MAX(pm.montoPresupuestado) FROM PresupuestoMensual pm", Double.class)
+            Integer maxSaldo = em.createQuery("SELECT MAX(pm.saldoInicial) FROM PresupuestoMensual pm", Integer.class)
                                 .getSingleResult();
             
-            if (maxMonto == null) {
+            if (maxSaldo == null) {
                 return Response.status(Response.Status.NOT_FOUND)
                     .entity("No se encontraron presupuestos.")
                     .build();
             }
 
             List<PresupuestoMensual> presupuestos = em.createQuery(
-                "SELECT pm FROM PresupuestoMensual pm WHERE pm.montoPresupuestado = :maxMonto", 
+                "SELECT pm FROM PresupuestoMensual pm WHERE pm.saldoInicial = :maxSaldo", 
                 PresupuestoMensual.class)
-                .setParameter("maxMonto", maxMonto)
+                .setParameter("maxSaldo", maxSaldo)
                 .getResultList();
 
             return Response.ok(presupuestos).build();
