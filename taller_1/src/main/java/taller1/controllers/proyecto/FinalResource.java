@@ -31,7 +31,7 @@ public class FinalResource {
             @PathParam("rangoFinal") double rangoFinal) {
         try {
             List<PresupuestoMensual> presupuestos = em.createQuery(
-                "SELECT pm FROM PresupuestoMensual pm WHERE pm.saldoInicial BETWEEN :rangoInicial AND :rangoFinal", 
+                "SELECT pm FROM PresupuestoMensual pm WHERE pm.montoPresupuestado BETWEEN :rangoInicial AND :rangoFinal", 
                 PresupuestoMensual.class)
                 .setParameter("rangoInicial", rangoInicial)
                 .setParameter("rangoFinal", rangoFinal)
@@ -56,19 +56,19 @@ public class FinalResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerPresupuestoMasAlto() {
         try {
-            Integer maxSaldo = em.createQuery("SELECT MAX(pm.saldoInicial) FROM PresupuestoMensual pm", Integer.class)
+            Double maxMonto = em.createQuery("SELECT MAX(pm.montoPresupuestado) FROM PresupuestoMensual pm", Double.class)
                                 .getSingleResult();
             
-            if (maxSaldo == null) {
+            if (maxMonto == null) {
                 return Response.status(Response.Status.NOT_FOUND)
                     .entity("No se encontraron presupuestos.")
                     .build();
             }
 
             List<PresupuestoMensual> presupuestos = em.createQuery(
-                "SELECT pm FROM PresupuestoMensual pm WHERE pm.saldoInicial = :maxSaldo", 
+                "SELECT pm FROM PresupuestoMensual pm WHERE pm.montoPresupuestado = :maxMonto", 
                 PresupuestoMensual.class)
-                .setParameter("maxSaldo", maxSaldo)
+                .setParameter("maxMonto", maxMonto)
                 .getResultList();
 
             return Response.ok(presupuestos).build();
